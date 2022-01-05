@@ -11,7 +11,7 @@ import java.util.concurrent.Executors
 val rootDir: String = System.getProperty("runtime.dir", ".") + "/"
 
 fun main() {
-	val threadPool = Executors.newFixedThreadPool(4)
+	val threadPool = Executors.newFixedThreadPool(3)
 
 	try {
 		val downloadDir = rootDir

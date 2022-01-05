@@ -33,3 +33,5 @@ abstract class CDCDataPage(browser: Browser, query: String): Page(browser) {
 class TotalCasesPage(browser: Browser): CDCDataPage(browser, "trends_totalcases")
 class TotalDeathsPage(browser: Browser): CDCDataPage(browser, "trends_totaldeaths")
 class DailyCasesPage(browser: Browser): CDCDataPage(browser, "trends_dailycases")
+class DailyDeathsPage(browser: Browser): CDCDataPage(browser, "trends_dailydeaths")
+class DailyTestVolumePage(browser: Browser): CDCDataPage(browser, "trends_newtestresultsreported")

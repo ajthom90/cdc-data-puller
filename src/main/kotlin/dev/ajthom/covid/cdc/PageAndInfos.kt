@@ -36,3 +36,21 @@ object DailyCases: PageAndInfo() {
 	override val filename = "${rootDir}data_table_for_daily_case_trends__the_united_states.csv"
 	override val reversedFilename = "${rootDir}dailyCases.csv"
 }
+
+object DailyDeaths: PageAndInfo() {
+	override fun getDataPage(browser: Browser): CDCDataPage {
+		return DailyDeathsPage(browser)
+	}
+
+	override val filename = "${rootDir}data_table_for_daily_death_trends__the_united_states.csv"
+	override val reversedFilename = "${rootDir}dailyDeaths.csv"
+}
+
+object DailyTests: PageAndInfo() {
+	override fun getDataPage(browser: Browser): CDCDataPage {
+		return DailyTestVolumePage(browser)
+	}
+
+	override val filename = "${rootDir}data_table_for_daily_test_volume__the_united_states.csv"
+	override val reversedFilename = "${rootDir}dailyTests.csv"
+}
