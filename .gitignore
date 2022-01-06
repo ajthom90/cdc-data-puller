@@ -79,3 +79,5 @@ fabric.properties
 geckodriver
 build/
 /buildAndRun.sh
+/src/main/kotlin/dev/ajthom/covid/cdc/custom/
+/src/main/kotlin/dev/ajthom/covid/cdc/UpdateMNCorona.kt

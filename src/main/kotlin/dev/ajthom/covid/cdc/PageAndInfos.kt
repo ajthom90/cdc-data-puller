@@ -3,11 +3,30 @@
 package dev.ajthom.covid.cdc
 
 import com.github.epadronu.balin.core.Browser
+import org.openqa.selenium.firefox.FirefoxDriver
 
 sealed class PageAndInfo {
 	abstract fun getDataPage(browser: Browser): CDCDataPage
 	abstract val filename: String
 	abstract val reversedFilename: String
+
+	fun downloadData() {
+		val driver = FirefoxDriver(firefoxOptions)
+		Browser.drive(driverFactory = { driver }) {
+			val casesPage = to { getDataPage(this) }
+			casesPage.clickDownload()
+		}
+	}
+
+	companion object {
+		val all = PageAndInfo::class.sealedSubclasses.mapNotNull { it.objectInstance }
+
+		fun downloadAll() {
+			all.forEach {
+				it.downloadData()
+			}
+		}
+	}
 }
 
 object TotalCases: PageAndInfo() {
