@@ -4,6 +4,7 @@ package dev.ajthom.covid.cdc
 
 import com.github.epadronu.balin.core.Browser
 import org.openqa.selenium.firefox.FirefoxDriver
+import java.util.concurrent.Executors
 
 sealed class PageAndInfo {
 	abstract fun getDataPage(browser: Browser): CDCDataPage
@@ -22,9 +23,13 @@ sealed class PageAndInfo {
 		val all = PageAndInfo::class.sealedSubclasses.mapNotNull { it.objectInstance }
 
 		fun downloadAll() {
-			all.forEach {
-				it.downloadData()
-			}
+			val threadPool = Executors.newFixedThreadPool(10)
+			all.map {
+				threadPool.submit {
+					it.downloadData()
+				}
+			}.forEach { it.get() }
+			threadPool.shutdown()
 		}
 	}
 }

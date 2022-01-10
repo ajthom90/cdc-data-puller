@@ -13,15 +13,15 @@ sealed class FollowUp {
 	open val dependsOn: List<FollowUp> = emptyList()
 
 	fun run(toRunAfter: () -> Unit) {
+		println("Starting: ${getClass().simpleName}")
 		if (hasRun()) {
-			println("Has already run: ${getClass().simpleName}")
+			println("Skipping: ${getClass().simpleName}")
 			return
 		}
 		dependsOn.forEach {
-			println("Running dependency: ${it.getClass().simpleName}")
 			it.doFollowUp()
 		}
-		println("Running follow-up: ${getClass().simpleName}")
+		println("Running: ${getClass().simpleName}")
 		toRunAfter()
 		setRun()
 	}
@@ -59,11 +59,24 @@ sealed class FollowUp {
 	}
 }
 
+object DeleteDownloadedFiles: FollowUp() {
+	override val dependsOn = listOf(ReverseCSVs)
+
+	override fun getClass(): KClass<out FollowUp> {
+		return DeleteDownloadedFiles::class
+	}
+
+	override fun doFollowUp() = super.run {
+		PageAndInfo.all.forEach {
+			File(it.filename).delete()
+		}
+	}
+}
+
 object ReverseCSVs: FollowUp() {
 	override fun doFollowUp() = run {
 		PageAndInfo.all.forEach {
 			reverseCSV(it.filename, it.reversedFilename)
-			File(it.filename).delete()
 		}
 	}
 
@@ -84,3 +97,5 @@ object ReverseCSVs: FollowUp() {
 		}
 	}
 }
+
+

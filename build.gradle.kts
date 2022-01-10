@@ -16,7 +16,9 @@ repositories {
 }
 
 dependencies {
+    implementation("org.apache.logging.log4j:log4j-api:2.17.0")
     implementation("com.github.epadronu:balin:0.4.2")
+    implementation("org.apache.poi:poi-ooxml:5.1.0")
 
     testImplementation(kotlin("test"))
 }
