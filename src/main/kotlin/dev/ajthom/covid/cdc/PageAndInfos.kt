@@ -11,11 +11,17 @@ sealed class PageAndInfo {
 	abstract val filename: String
 	abstract val reversedFilename: String
 
-	fun downloadData() {
-		val driver = FirefoxDriver(firefoxOptions)
-		Browser.drive(driverFactory = { driver }) {
-			val casesPage = to { getDataPage(this) }
-			casesPage.clickDownload()
+	fun downloadData(tryNum: Int = 0) {
+		try {
+			val driver = FirefoxDriver(firefoxOptions)
+			Browser.drive(driverFactory = { driver }) {
+				val casesPage = to { getDataPage(this) }
+				casesPage.clickDownload()
+			}
+		} catch (e: Exception) {
+			if (tryNum < 10) {
+				downloadData(tryNum + 1)
+			}
 		}
 	}
 
